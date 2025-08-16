@@ -1,0 +1,8 @@
+# ----- DISCLAIMER -----
+# You can choose wether to install 'pypdf' and 'cairosvg' 
+# based on if you want PDF merging from SVG conversion.
+
+requests
+playwright
+pypdf
+cairosvg
