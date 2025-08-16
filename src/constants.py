@@ -1,5 +1,5 @@
 """
-Constants for MuseScore Grabber.
+Constants for SCASO Grabber.
 
 Collections are immutable (tuples).
 """
