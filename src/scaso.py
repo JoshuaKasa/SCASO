@@ -353,6 +353,7 @@ def download_assets(
     out_dir: Path,
     total_pages: int,
     page_indices: Tuple[int, ...],
+    song_stem: str,
 ) -> Tuple[Tuple[Path, ...], Optional[Path], Optional[Path]]:
     """
     Download SVG pages and optional MusicXML/MIDI.
@@ -378,7 +379,7 @@ def download_assets(
         safe_print(f"[+] Downloading {len(page_indices)} SVG page(s)")
         for idx in page_indices:
             page_url = f"{base}score_{idx}.svg"
-            out_file = out_dir / f"page_{idx + 1:02d}.svg"
+            out_file = out_dir / f"{song_stem} - page - {idx + 1:02d}.svg"
 
             if out_file.exists() and out_file.stat().st_size > 0:
                 safe_print(f"  [skip] {out_file.name} (exists)")
@@ -404,7 +405,7 @@ def download_assets(
     mxl_path: Optional[Path] = None
     if want_mxl:
         mxl_url = f"{base}score.mxl"
-        mxl_out = out_dir / "score.mxl"
+        mxl_out = out_dir / f"{song_stem}.mxl"
         data = _http_get(
             mxl_url,
             headers,
@@ -422,7 +423,7 @@ def download_assets(
     mid_path: Optional[Path] = None
     if want_mid:
         mid_url = f"{base}score.mid"
-        mid_out = out_dir / "score.mid"
+        mid_out = out_dir / f"{song_stem}.mid"
         data = _http_get(
             mid_url,
             headers,
@@ -550,6 +551,7 @@ def run(options: Options) -> int:
 
     score_id = options.url.rstrip("/").split("/")[-1]
     base_name = sanitize_filename(f"{title} - {score_id}")
+    song_stem = sanitize_filename(title)
 
     out_dir = (
         Path(options.output_dir)
@@ -570,6 +572,7 @@ def run(options: Options) -> int:
         out_dir=out_dir,
         total_pages=total_pages,
         page_indices=page_indices,
+        song_stem=base_name,
     )
 
     if (not options.no_pdf) and ("svg" in options.formats):
