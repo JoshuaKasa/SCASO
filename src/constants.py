@@ -13,7 +13,7 @@ USER_AGENT: str = (
 )
 
 PDF_ENGINES: Tuple[str, ...] = ("cairosvg", "none")
-SUPPORTED_FORMATS: Tuple[str, ...] = ("svg", "mxl", "mid", "midi")
+SUPPORTED_FORMATS: Tuple[str, ...] = ("svg", "mxl", "mid", "midi", "mscz")
 
 DEFAULT_WAIT_MS: int = 4000
 DEFAULT_THROTTLE_MS: int = 75
